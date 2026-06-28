@@ -1,3 +1,4 @@
+// v3
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -11,21 +12,12 @@ export default async function handler(req, res) {
   const url = action ? `${base}?action=${action}` : base;
 
   try {
-    const response = await fetch(url, {
-      redirect: 'follow',
-      headers: {
-        'User-Agent': 'Mozilla/5.0'
-      }
-    });
-    
+    const response = await fetch(url, { redirect: 'follow', headers: { 'User-Agent': 'Mozilla/5.0' } });
     const text = await response.text();
-    
-    // Si la respuesta es HTML, algo salió mal
     if (text.trim().startsWith('<')) {
-      res.status(500).json({ error: 'Apps Script devolvió HTML', raw: text.slice(0, 200) });
+      res.status(500).json({ error: 'HTML response', raw: text.slice(0, 300) });
       return;
     }
-    
     res.setHeader('Content-Type', 'application/json');
     res.status(200).send(text);
   } catch (err) {
