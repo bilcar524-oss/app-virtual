@@ -7,8 +7,7 @@ export default async function handler(req, res) {
   }
 
   const { action } = req.query;
-  const base = 'https://script.google.com/macros/s/AKfycbz6EH7QGJ0HlHhEf2CoUvAqE-gnIi2sb7ajQPzjuHK8TlUyOEOTAO01OSqlmpVwCXJX/exec';
-
+  const base = 'https://script.google.com/macros/s/AKfycbx-Nb9t-exmiro8WDEgBQ8l9mbGiBcM91RmdTR2yVViws11TPERAlBzrwH7_61x3gsj/exec';
   try {
     const response = await fetch(action ? `${base}?action=${action}` : base, {
       redirect: 'follow'
