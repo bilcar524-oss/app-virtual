@@ -21,4 +21,14 @@ export default async function handler(req, res) {
     const text = await response.text();
     
     // Si la respuesta es HTML, algo salió mal
-    if
+    if (text.trim().startsWith('<')) {
+      res.status(500).json({ error: 'Apps Script devolvió HTML', raw: text.slice(0, 200) });
+      return;
+    }
+    
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).send(text);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
